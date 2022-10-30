@@ -66,7 +66,7 @@ export default function Home() {
 
 const PokemonListing: React.FC<{
   pokemon: PokemonFromServer;
-  vote: (value: number) => void;
+  vote: () => void;
 }> = ({ pokemon, vote }) => {
   return (
     <div className="flex flex-col items-center">
