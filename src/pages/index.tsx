@@ -37,6 +37,8 @@ export default function Home() {
   const voteForRoundest = (selection: number | undefined) => {
     if (!selection) return null;
     console.log("voting for " + selection);
+    const [first, second] = getOptionsForVote();
+    setInitialValues({ first, second });
   };
 
   return (
