@@ -1,5 +1,6 @@
 import { getOptionsForVote } from "@/utils/getRandomPokemon";
 import { trpc } from "@/utils/trpc";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const ButtonClasses =
@@ -25,7 +26,13 @@ export default function Home() {
     id: initialValues?.second ?? 0,
   });
 
-  if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
+  if (
+    firstPokemon.isLoading ||
+    secondPokemon.isLoading ||
+    !firstPokemon.data?.sprites.front_default ||
+    !secondPokemon.data?.sprites.front_default
+  )
+    return null;
 
   const voteForRoundest = (selection: number | undefined) => {
     if (!selection) return null;
@@ -38,10 +45,12 @@ export default function Home() {
       <div className="p-2" />
       <div className="border rounded p-8 flex justify-evenly items-center max-w-2xl">
         <div className="flex flex-col items-center">
-          <img
-            alt={firstPokemon.data?.name}
+          <Image
+            alt={firstPokemon.data?.name ?? ""}
             src={firstPokemon.data?.sprites.front_default ?? ""}
-            className="w-64 h-64"
+            width="240"
+            height="240"
+            priority
           />
           <div className="text-xl text-center capitalize mt-[-1rem]">
             {firstPokemon.data?.name}
@@ -55,10 +64,12 @@ export default function Home() {
         </div>
         <div className="p-8">vs</div>
         <div className="flex flex-col items-center">
-          <img
-            alt={secondPokemon.data?.name}
-            src={secondPokemon.data?.sprites.front_default ?? ""}
-            className="w-64 h-64"
+          <Image
+            alt={secondPokemon.data?.name ?? ""}
+            src={secondPokemon.data?.sprites.front_default}
+            width="240"
+            height="240"
+            priority
           />
           <div className="text-xl text-center capitalize mt-[-1rem]">
             {secondPokemon.data?.name}
