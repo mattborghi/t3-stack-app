@@ -29,6 +29,8 @@ export default function Home() {
     id: initialValues?.second ?? 0,
   });
 
+  const voteMutation = trpc.voteCreate.useMutation();
+
   if (
     firstPokemon.isLoading ||
     secondPokemon.isLoading ||
@@ -38,10 +40,21 @@ export default function Home() {
     return null;
 
   const voteForRoundest = (selection: number | undefined) => {
-    if (!selection) return null;
-    console.log("voting for " + selection);
-    const [first, second] = getOptionsForVote();
-    setInitialValues({ first, second });
+    if (!selection || !initialValues) return null;
+    const { first, second } = initialValues;
+    if (selection === first) {
+      voteMutation.mutate({
+        votedFor: first,
+        votedAgainst: second,
+      });
+    } else {
+      voteMutation.mutate({
+        votedFor: second,
+        votedAgainst: first,
+      });
+    }
+    const [firstValue, secondValue] = getOptionsForVote();
+    setInitialValues({ first: firstValue, second: secondValue });
   };
 
   return (
