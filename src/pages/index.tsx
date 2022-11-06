@@ -86,8 +86,8 @@ const PokemonListing: React.FC<{
       <Image
         alt={pokemon.name ?? ""}
         src={pokemon.sprites.front_default ?? ""}
-        width="240"
-        height="240"
+        width="256"
+        height="256"
         priority
       />
       <div className="text-xl text-center capitalize mt-[-1rem]">
