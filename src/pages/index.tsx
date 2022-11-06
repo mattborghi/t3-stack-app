@@ -34,8 +34,8 @@ export default function Home() {
   if (
     firstPokemon.isLoading ||
     secondPokemon.isLoading ||
-    !firstPokemon.data?.sprites.front_default ||
-    !secondPokemon.data?.sprites.front_default
+    !firstPokemon.data?.spriteUrl ||
+    !secondPokemon.data?.spriteUrl
   )
     return null;
 
@@ -85,7 +85,7 @@ const PokemonListing: React.FC<{
     <div className="flex flex-col items-center">
       <Image
         alt={pokemon.name ?? ""}
-        src={pokemon.sprites.front_default ?? ""}
+        src={pokemon.spriteUrl ?? ""}
         width="256"
         height="256"
         priority
